@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>About - Your Dictionary</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="logo" onclick="location.href='index.html'">
+      <div class="logo-icon-wrap">
+        <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
+          <rect width="32" height="32" rx="8" fill="#1a3a8f"/>
+          <path d="M8 22 L16 8 L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M10.5 17 L21.5 17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">YourDict</span>
+    </div>
+    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" class="mnav-item">🏠 Home</a>
+  <a href="translate.html" class="mnav-item">🌐 Translate</a>
+  <a href="favorites.html" class="mnav-item">❤️ Favorites</a>
+  <a href="quiz.html" class="mnav-item">🎯 Quiz</a>
+  <a href="about.html" class="mnav-item active">ℹ️ About</a>
+</div>
+
+<div class="page-wrap">
+  <div class="about-hero">
+    <svg viewBox="0 0 32 32" fill="none" width="56" height="56" style="margin-bottom:14px">
+      <rect width="32" height="32" rx="10" fill="rgba(255,255,255,0.2)"/>
+      <path d="M8 22 L16 8 L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M10.5 17 L21.5 17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <h1>Your Dictionary</h1>
+    <p style="opacity:0.8;margin-top:6px;font-size:14px">Version 1.0 • Free Forever</p>
+  </div>
+
+  <div class="card">
+    <div class="sec-label" style="margin-bottom:16px">Features</div>
+    <div class="feature-item"><div class="feature-emoji">🔍</div><div class="feature-text">Instant word definitions & examples</div></div>
+    <div class="feature-item"><div class="feature-emoji">🔊</div><div class="feature-text">Audio pronunciation (British & American)</div></div>
+    <div class="feature-item"><div class="feature-emoji">🔄</div><div class="feature-text">Synonyms & antonyms</div></div>
+    <div class="feature-item"><div class="feature-emoji">🌐</div><div class="feature-text">Translate between 13 languages</div></div>
+    <div class="feature-item"><div class="feature-emoji">❤️</div><div class="feature-text">Save your favorite words</div></div>
+    <div class="feature-item"><div class="feature-emoji">🎯</div><div class="feature-text">Vocabulary quiz game</div></div>
+    <div class="feature-item"><div class="feature-emoji">📅</div><div class="feature-text">Word of the Day</div></div>
+    <div class="feature-item"><div class="feature-emoji">🕐</div><div class="feature-text">Recent search history</div></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-label" style="margin-bottom:12px">Data Sources</div>
+    <p style="color:#64748b;font-size:14px;line-height:1.7">Dictionary data powered by the <strong style="color:#1a3a8f">Free Dictionary API</strong>. Translation powered by <strong style="color:#1a3a8f">MyMemory</strong>.</p>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="bnav">🏠<span>Home</span></a>
+  <a href="translate.html" class="bnav">🌐<span>Translate</span></a>
+  <a href="favorites.html" class="bnav">❤️<span>Favorites</span></a>
+  <a href="quiz.html" class="bnav">🎯<span>Quiz</span></a>
+  <a href="about.html" class="bnav active">ℹ️<span>About</span></a>
+</nav>
+
+<script>
+document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileNav').classList.toggle('open'));
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Translate - Your Dictionary</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="logo" onclick="location.href='index.html'">
+      <div class="logo-icon-wrap">
+        <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
+          <rect width="32" height="32" rx="8" fill="#1a3a8f"/>
+          <path d="M8 22 L16 8 L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M10.5 17 L21.5 17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">YourDict</span>
+    </div>
+    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" class="mnav-item">🏠 Home</a>
+  <a href="translate.html" class="mnav-item active">🌐 Translate</a>
+  <a href="favorites.html" class="mnav-item">❤️ Favorites</a>
+  <a href="quiz.html" class="mnav-item">🎯 Quiz</a>
+  <a href="about.html" class="mnav-item">ℹ️ About</a>
+</div>
+
+<div class="page-wrap">
+  <div class="page-title">🌐 Translate</div>
+
+  <div class="card">
+    <div class="lang-row">
+      <select id="fromLang">
+        <option value="en">🇬🇧 English</option>
+        <option value="ar">🇸🇦 Arabic</option>
+        <option value="fr">🇫🇷 French</option>
+        <option value="es">🇪🇸 Spanish</option>
+        <option value="de">🇩🇪 German</option>
+        <option value="it">🇮🇹 Italian</option>
+        <option value="pt">🇧🇷 Portuguese</option>
+        <option value="ru">🇷🇺 Russian</option>
+        <option value="zh">🇨🇳 Chinese</option>
+        <option value="ja">🇯🇵 Japanese</option>
+        <option value="ko">🇰🇷 Korean</option>
+        <option value="tr">🇹🇷 Turkish</option>
+        <option value="hi">🇮🇳 Hindi</option>
+      </select>
+      <button class="swap-btn" onclick="swapLangs()">⇄</button>
+      <select id="toLang">
+        <option value="ar">🇸🇦 Arabic</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="fr">🇫🇷 French</option>
+        <option value="es">🇪🇸 Spanish</option>
+        <option value="de">🇩🇪 German</option>
+        <option value="it">🇮🇹 Italian</option>
+        <option value="pt">🇧🇷 Portuguese</option>
+        <option value="ru">🇷🇺 Russian</option>
+        <option value="zh">🇨🇳 Chinese</option>
+        <option value="ja">🇯🇵 Japanese</option>
+        <option value="ko">🇰🇷 Korean</option>
+        <option value="tr">🇹🇷 Turkish</option>
+        <option value="hi">🇮🇳 Hindi</option>
+      </select>
+    </div>
+    <textarea id="inputText" placeholder="Enter text to translate..."></textarea>
+    <button class="btn-primary" style="width:100%;margin-top:12px;padding:14px" onclick="translateText()">Translate</button>
+  </div>
+
+  <div class="card" id="translateResult" style="display:none">
+    <div class="result-label">Translation</div>
+    <div class="result-text" id="resultText"></div>
+    <button onclick="copyResult()" style="margin-top:12px;background:#f0f4ff;border:1px solid #e2e8f0;border-radius:50px;padding:8px 18px;cursor:pointer;font-family:inherit;font-weight:700;font-size:13px">📋 Copy</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="bnav">🏠<span>Home</span></a>
+  <a href="translate.html" class="bnav active">🌐<span>Translate</span></a>
+  <a href="favorites.html" class="bnav">❤️<span>Favorites</span></a>
+  <a href="quiz.html" class="bnav">🎯<span>Quiz</span></a>
+  <a href="about.html" class="bnav">ℹ️<span>About</span></a>
+</nav>
+
+<script>
+document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileNav').classList.toggle('open'));
+
+function swapLangs() {
+  const f=document.getElementById('fromLang'), t=document.getElementById('toLang');
+  const tmp=f.value; f.value=t.value; t.value=tmp;
+}
+
+async function translateText() {
+  const text=document.getElementById('inputText').value.trim();
+  if(!text) return;
+  const from=document.getElementById('fromLang').value;
+  const to=document.getElementById('toLang').value;
+  const resultDiv=document.getElementById('translateResult');
+  const resultText=document.getElementById('resultText');
+  resultDiv.style.display='block';
+  resultText.textContent='Translating...';
+  try {
+    const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`);
+    const data=await res.json();
+    resultText.textContent=data.responseData.translatedText;
+  } catch(e) { resultText.textContent='Translation failed. Check your internet.'; }
+}
+
+function copyResult() {
+  const t=document.getElementById('resultText').textContent;
+  navigator.clipboard?.writeText(t).catch(()=>{});
+}
+</script>
+</body>
+</html>
