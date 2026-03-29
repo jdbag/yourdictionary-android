@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.JavascriptInterface;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,42 +33,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
-}        public void showInterstitial(String adUnitId) {
-            runOnUiThread(() -> {
-                if (interstitialAd != null) {
-                    interstitialAd.show(MainActivity.this);
-                    interstitialAd = null;
-                    loadInterstitialAd(); // reload for next time
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        if (bannerAdView != null) bannerAdView.pause();
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (bannerAdView != null) bannerAdView.resume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (bannerAdView != null) bannerAdView.destroy();
-        super.onDestroy();
     }
 }
