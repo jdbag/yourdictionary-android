@@ -22,30 +22,65 @@ jobs:
           unzip -q /tmp/gradle.zip -d /opt/gradle
           echo "/opt/gradle/gradle-8.4/bin" >> $GITHUB_PATH
 
-      - name: Create launcher icons
+      - name: Install Python & Pillow
+        run: pip install Pillow --break-system-packages -q
+
+      - name: Generate launcher icons from logo
         run: |
-          sudo apt-get install -y imagemagick -qq
-          create_icon() {
-            SIZE=$1; DIR=$2
-            mkdir -p app/src/main/res/$DIR
-            convert -size ${SIZE}x${SIZE} xc:none \
-              \( -size ${SIZE}x${SIZE} xc:none -fill '#1a3a8f' \
-                 -draw "roundrectangle 0,0,${SIZE},${SIZE},$((SIZE/5)),$((SIZE/5))" \) \
-              -composite \
-              \( -size ${SIZE}x${SIZE} xc:none -fill none -stroke white -strokewidth $((SIZE/14)) \
-                 -draw "polyline $((SIZE*25/100)),$((SIZE*75/100)) $((SIZE*50/100)),$((SIZE*20/100)) $((SIZE*75/100)),$((SIZE*75/100))" \
-                 -draw "line $((SIZE*30/100)),$((SIZE*55/100)) $((SIZE*70/100)),$((SIZE*55/100))" \) \
-              -composite \
-              app/src/main/res/$DIR/ic_launcher.png
-            cp app/src/main/res/$DIR/ic_launcher.png app/src/main/res/$DIR/ic_launcher_round.png
-          }
-          create_icon 36 mipmap-ldpi
-          create_icon 48 mipmap-mdpi
-          create_icon 72 mipmap-hdpi
-          create_icon 96 mipmap-xhdpi
-          create_icon 144 mipmap-xxhdpi
-          create_icon 192 mipmap-xxxhdpi
-          echo "Icons created ✓"
+          python3 << 'PYEOF'
+          from PIL import Image, ImageDraw
+          import os
+
+          def make_icon(size, path):
+              img = Image.new('RGBA', (size, size), (0,0,0,0))
+              # gradient pink -> purple -> blue
+              for y in range(size):
+                  t = y / size
+                  if t < 0.5:
+                      tt = t * 2
+                      r2 = int(255 + (124-255)*tt)
+                      g2 = int(110 + (58-110)*tt)
+                      b2 = int(180 + (237-180)*tt)
+                  else:
+                      tt = (t-0.5)*2
+                      r2 = int(124 + (37-124)*tt)
+                      g2 = int(58 + (99-58)*tt)
+                      b2 = int(237 + (235-237)*tt)
+                  for x in range(size):
+                      tx = x / size
+                      rr = max(0,min(255,int(r2 + (255-r2)*(1-tx)*0.25)))
+                      gg = max(0,min(255,int(g2 + (80-g2)*tx*0.15)))
+                      bb = max(0,min(255,int(b2)))
+                      img.putpixel((x,y),(rr,gg,bb,255))
+              mask = Image.new('L',(size,size),0)
+              md = ImageDraw.Draw(mask)
+              md.rounded_rectangle([0,0,size-1,size-1],radius=int(size*0.22),fill=255)
+              img.putalpha(mask)
+              d = ImageDraw.Draw(img)
+              cx,cy = size//2, int(size*0.46)
+              bw = int(size*0.54)
+              bh = int(size*0.30)
+              base_y = cy + int(bh*0.35)
+              left_x = cx - int(bw*0.47)
+              right_x = cx + int(bw*0.47)
+              for i in range(5):
+                  t = i/4
+                  ah = int(bh*(0.85-t*0.45))
+                  lw = max(1,int(size*0.022-i*size*0.003))
+                  d.arc([left_x,cy-ah,cx-int(size*0.02),base_y],start=200,end=350,fill='white',width=lw)
+                  d.arc([cx+int(size*0.02),cy-ah,right_x,base_y],start=190,end=340,fill='white',width=lw)
+              lw2 = max(2,int(size*0.032))
+              d.line([left_x+int(size*0.02),base_y,right_x-int(size*0.02),base_y],fill='white',width=lw2)
+              d.line([cx,cy-int(bh*0.75),cx,base_y],fill='white',width=max(1,int(size*0.018)))
+              img.save(path,'PNG')
+
+          configs = [('mipmap-ldpi',36),('mipmap-mdpi',48),('mipmap-hdpi',72),('mipmap-xhdpi',96),('mipmap-xxhdpi',144),('mipmap-xxxhdpi',192)]
+          for dname,sz in configs:
+              os.makedirs(f'app/src/main/res/{dname}',exist_ok=True)
+              make_icon(sz,f'app/src/main/res/{dname}/ic_launcher.png')
+              make_icon(sz,f'app/src/main/res/{dname}/ic_launcher_round.png')
+              print(f'Created {sz}x{sz}')
+          PYEOF
 
       - name: Build APK
         run: gradle assembleDebug
