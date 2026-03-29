@@ -7,6 +7,7 @@ import android.webkit.WebViewClient;
 import android.webkit.JavascriptInterface;
 import android.widget.LinearLayout;
 import android.view.Gravity;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
@@ -23,26 +24,23 @@ public class MainActivity extends AppCompatActivity {
     private AdView bannerAdView;
     private InterstitialAd interstitialAd;
 
-    private static final String BANNER_AD_UNIT   = "ca-app-pub-3640039090708511/9276320484";
-    private static final String INTER_AD_UNIT    = "ca-app-pub-3640039090708511/6729312104";
+    private static final String BANNER_AD   = "ca-app-pub-3640039090708511/9276320484";
+    private static final String INTER_AD    = "ca-app-pub-3640039090708511/6729312104";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Build layout programmatically - no XML needed for ad
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
 
-        // WebView
         webView = new WebView(this);
         LinearLayout.LayoutParams wvParams = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f);
         webView.setLayoutParams(wvParams);
 
-        // Banner Ad
         bannerAdView = new AdView(this);
-        bannerAdView.setAdUnitId(BANNER_AD_UNIT);
+        bannerAdView.setAdUnitId(BANNER_AD);
         bannerAdView.setAdSize(AdSize.BANNER);
         LinearLayout.LayoutParams adParams = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -54,17 +52,20 @@ public class MainActivity extends AppCompatActivity {
         root.addView(bannerAdView);
         setContentView(root);
 
-        // Init Ads
-        MobileAds.initialize(this, status -> {});
-        bannerAdView.loadAd(new AdRequest.Builder().build());
+        MobileAds.initialize(this, status -> {
+            Log.d("AdMob", "Initialized");
+            runOnUiThread(() -> bannerAdView.loadAd(new AdRequest.Builder().build()));
+        });
+
         loadInterstitial();
 
-        // WebView settings
         WebSettings s = webView.getSettings();
         s.setJavaScriptEnabled(true);
         s.setDomStorageEnabled(true);
         s.setAllowFileAccessFromFileURLs(true);
+        s.setAllowUniversalAccessFromFileURLs(true);
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        s.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         webView.addJavascriptInterface(new Bridge(), "AndroidBridge");
         webView.setWebViewClient(new WebViewClient());
@@ -72,14 +73,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadInterstitial() {
-        InterstitialAd.load(this, INTER_AD_UNIT,
-            new AdRequest.Builder().build(),
+        InterstitialAd.load(this, INTER_AD, new AdRequest.Builder().build(),
             new InterstitialAdLoadCallback() {
                 @Override public void onAdLoaded(InterstitialAd ad) {
                     interstitialAd = ad;
+                    Log.d("AdMob", "Interstitial loaded");
                 }
                 @Override public void onAdFailedToLoad(LoadAdError e) {
                     interstitialAd = null;
+                    Log.d("AdMob", "Interstitial failed: " + e.getMessage());
                 }
             });
     }
