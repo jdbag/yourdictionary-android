@@ -24,23 +24,28 @@ jobs:
 
       - name: Create launcher icons
         run: |
-          sudo apt-get install -y imagemagick
-          for size in 36 48 72 96 144 192; do
-            case $size in
-              36) dir="mipmap-ldpi";;
-              48) dir="mipmap-mdpi";;
-              72) dir="mipmap-hdpi";;
-              96) dir="mipmap-xhdpi";;
-              144) dir="mipmap-xxhdpi";;
-              192) dir="mipmap-xxxhdpi";;
-            esac
-            mkdir -p app/src/main/res/$dir
-            convert -size ${size}x${size} xc:#1a3a8f \
-              -fill white -draw "roundrectangle 4,4,$((size-4)),$((size-4)),8,8" \
-              app/src/main/res/$dir/ic_launcher.png
-            cp app/src/main/res/$dir/ic_launcher.png \
-               app/src/main/res/$dir/ic_launcher_round.png
-          done
+          sudo apt-get install -y imagemagick -qq
+          create_icon() {
+            SIZE=$1; DIR=$2
+            mkdir -p app/src/main/res/$DIR
+            convert -size ${SIZE}x${SIZE} xc:none \
+              \( -size ${SIZE}x${SIZE} xc:none -fill '#1a3a8f' \
+                 -draw "roundrectangle 0,0,${SIZE},${SIZE},$((SIZE/5)),$((SIZE/5))" \) \
+              -composite \
+              \( -size ${SIZE}x${SIZE} xc:none -fill none -stroke white -strokewidth $((SIZE/14)) \
+                 -draw "polyline $((SIZE*25/100)),$((SIZE*75/100)) $((SIZE*50/100)),$((SIZE*20/100)) $((SIZE*75/100)),$((SIZE*75/100))" \
+                 -draw "line $((SIZE*30/100)),$((SIZE*55/100)) $((SIZE*70/100)),$((SIZE*55/100))" \) \
+              -composite \
+              app/src/main/res/$DIR/ic_launcher.png
+            cp app/src/main/res/$DIR/ic_launcher.png app/src/main/res/$DIR/ic_launcher_round.png
+          }
+          create_icon 36 mipmap-ldpi
+          create_icon 48 mipmap-mdpi
+          create_icon 72 mipmap-hdpi
+          create_icon 96 mipmap-xhdpi
+          create_icon 144 mipmap-xxhdpi
+          create_icon 192 mipmap-xxxhdpi
+          echo "Icons created ✓"
 
       - name: Build APK
         run: gradle assembleDebug
