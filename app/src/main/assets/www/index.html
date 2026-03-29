@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Your Dictionary</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 40 32" fill="none">
+        <rect x="2" y="24" width="36" height="4" rx="2" fill="#1a3a8f"/>
+        <path d="M20 4 C10 4 4 10 4 20 L20 18 L36 20 C36 10 30 4 20 4Z" fill="#1a3a8f" opacity="0.15"/>
+        <path d="M4 20 C4 20 20 16 36 20" stroke="#1a3a8f" stroke-width="2.5" fill="none"/>
+        <path d="M20 4 L20 18" stroke="#1a3a8f" stroke-width="2"/>
+        <path d="M6 8 C6 8 20 6 34 8" stroke="#1a3a8f" stroke-width="2" fill="none"/>
+        <path d="M5 12 C5 12 20 10 35 12" stroke="#1a3a8f" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <path d="M4.5 16 C4.5 16 20 14 35.5 16" stroke="#1a3a8f" stroke-width="1.5" fill="none" opacity="0.4"/>
+      </svg>
+      <span class="logo-text">Your<br><strong>Dictionary</strong></span>
+    </div>
+    <nav class="nav">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="translate.html" class="nav-link">Translate</a>
+      <a href="favorites.html" class="nav-link">Favorites</a>
+      <a href="quiz.html" class="nav-link">Quiz</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="translate.html">Translate</a>
+  <a href="favorites.html">Favorites</a>
+  <a href="quiz.html">Quiz</a>
+  <a href="about.html">About</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-title">Find the meaning of<br><span class="gradient-text">any word, instantly</span></h1>
+    <p class="hero-sub">Definitions, examples, synonyms, and more — all in one place.</p>
+    <div class="search-box" id="heroSearch">
+      <span class="search-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </span>
+      <input type="text" id="heroInput" placeholder="Search a word..." autocomplete="off" spellcheck="false">
+      <button class="search-btn" id="heroBtn">Search</button>
+    </div>
+    <div class="suggestions" id="suggestions"></div>
+  </div>
+</section>
+
+<!-- AD BANNER TOP -->
+<div class="ad-container" id="adBannerTop">
+  <div class="ad-label">Advertisement</div>
+  <div id="admob-banner-1" class="admob-banner"></div>
+</div>
+
+<!-- RESULTS -->
+<section class="results-section" id="resultsSection" style="display:none">
+  <div class="container">
+    <div id="resultsContent"></div>
+  </div>
+</section>
+
+<!-- WORD OF THE DAY -->
+<section class="wod-section" id="wodSection">
+  <div class="container">
+    <div class="section-label">✦ Word of the Day</div>
+    <div class="wod-card" id="wodCard">
+      <div class="wod-loading">Loading...</div>
+    </div>
+  </div>
+</section>
+
+<!-- AD BANNER MIDDLE -->
+<div class="ad-container" id="adBannerMiddle">
+  <div class="ad-label">Advertisement</div>
+  <div id="admob-banner-2" class="admob-banner"></div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories-section">
+  <div class="container">
+    <div class="section-label">✦ Browse by Category</div>
+    <div class="categories-grid">
+      <div class="cat-card" data-word="ephemeral"><div class="cat-icon">📚</div><div class="cat-name">Literature</div><div class="cat-example">ephemeral</div></div>
+      <div class="cat-card" data-word="hypothesis"><div class="cat-icon">🔬</div><div class="cat-name">Science</div><div class="cat-example">hypothesis</div></div>
+      <div class="cat-card" data-word="algorithm"><div class="cat-icon">💻</div><div class="cat-name">Technology</div><div class="cat-example">algorithm</div></div>
+      <div class="cat-card" data-word="serendipity"><div class="cat-icon">✨</div><div class="cat-name">Beautiful Words</div><div class="cat-example">serendipity</div></div>
+      <div class="cat-card" data-word="democracy"><div class="cat-icon">🏛️</div><div class="cat-name">Politics</div><div class="cat-example">democracy</div></div>
+      <div class="cat-card" data-word="melancholy"><div class="cat-icon">🎭</div><div class="cat-name">Emotions</div><div class="cat-example">melancholy</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENT SEARCHES -->
+<section class="recent-section" id="recentSection" style="display:none">
+  <div class="container">
+    <div class="section-label">✦ Recent Searches</div>
+    <div class="recent-list" id="recentList"></div>
+  </div>
+</section>
+
+<!-- AD BANNER BOTTOM -->
+<div class="ad-container" id="adBannerBottom">
+  <div class="ad-label">Advertisement</div>
+  <div id="admob-banner-3" class="admob-banner"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg viewBox="0 0 40 32" fill="none" width="32">
+        <rect x="2" y="24" width="36" height="4" rx="2" fill="#fff" opacity="0.5"/>
+        <path d="M20 4 L20 20" stroke="#fff" stroke-width="2" opacity="0.7"/>
+        <path d="M4 20 C4 20 20 16 36 20" stroke="#fff" stroke-width="2.5" fill="none" opacity="0.7"/>
+      </svg>
+      <span>Your Dictionary</span>
+    </div>
+    <p class="footer-copy">© 2025 Your Dictionary. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script src="admob.js"></script>
+</body>
+</html>
