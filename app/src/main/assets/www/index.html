@@ -5,83 +5,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Your Dictionary</title>
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="light">
 
-<header class="header">
-  <div class="header-inner">
-    <div class="logo" onclick="location.href='index.html'">
-      <div class="logo-icon-wrap">
-        <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
-          <rect width="32" height="32" rx="8" fill="#1a3a8f"/>
-          <path d="M8 22 L16 8 L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M10.5 17 L21.5 17" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="logo-text">YourDict</span>
+<div class="topbar">
+  <div class="logo-row">
+    <div class="app-logo">
+      <svg viewBox="0 0 40 40" width="36" height="36">
+        <defs>
+          <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ff6eb4"/>
+            <stop offset="50%" style="stop-color:#7c3aed"/>
+            <stop offset="100%" style="stop-color:#2563eb"/>
+          </linearGradient>
+        </defs>
+        <rect width="40" height="40" rx="10" fill="url(#lg)"/>
+        <g fill="none" stroke="white" stroke-linecap="round">
+          <line x1="20" y1="28" x2="8" y2="28" stroke-width="2.2"/>
+          <line x1="20" y1="28" x2="32" y2="28" stroke-width="2.2"/>
+          <line x1="20" y1="28" x2="20" y2="16" stroke-width="1.8"/>
+          <path d="M8 28 Q10 18 20 16" stroke-width="1.8"/>
+          <path d="M10 25 Q12 17 20 16" stroke-width="1.4" opacity="0.8"/>
+          <path d="M12 24 Q14 18 20 16" stroke-width="1" opacity="0.6"/>
+          <path d="M32 28 Q30 18 20 16" stroke-width="1.8"/>
+          <path d="M30 25 Q28 17 20 16" stroke-width="1.4" opacity="0.8"/>
+          <path d="M28 24 Q26 18 20 16" stroke-width="1" opacity="0.6"/>
+        </g>
+      </svg>
     </div>
-    <button class="menu-btn" id="menuBtn" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="logo-text-wrap">
+      <span class="logo-main">Your</span>
+      <span class="logo-main bold">Dictionary</span>
+    </div>
   </div>
-</header>
-
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html" class="mnav-item active">🏠 Home</a>
-  <a href="translate.html" class="mnav-item">🌐 Translate</a>
-  <a href="favorites.html" class="mnav-item">❤️ Favorites</a>
-  <a href="quiz.html" class="mnav-item">🎯 Quiz</a>
-  <a href="about.html" class="mnav-item">ℹ️ About</a>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
 </div>
 
 <div class="search-hero">
-  <div class="search-hero-inner">
-    <h1>Find any word,<br><span class="grad">instantly</span></h1>
-    <p>Definitions · Synonyms · Examples · Audio</p>
-    <div class="search-wrap">
-      <svg class="s-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-      <input type="text" id="heroInput" placeholder="Search a word..." autocomplete="off" spellcheck="false">
-      <button class="s-btn" id="heroBtn">Go</button>
+  <div class="search-inner">
+    <div class="search-box">
+      <svg class="s-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      <input type="text" id="searchInput" placeholder="Search in English..." autocomplete="off" spellcheck="false">
+      <button class="s-clear" id="clearBtn" onclick="clearSearch()" style="display:none">✕</button>
+      <button class="s-go" onclick="doSearch()">Search</button>
     </div>
-    <div class="suggestions" id="suggestions"></div>
+    <div class="sugg-box" id="suggBox"></div>
   </div>
 </div>
 
-<div class="results-section" id="resultsSection" style="display:none">
-  <div class="page-wrap" id="resultsContent"></div>
-</div>
+<div id="homeView">
+  <div class="section">
+    <div class="sec-title">📅 Word of the Day</div>
+    <div class="wod-card" id="wodCard"><div class="center-spin"><div class="spin white"></div></div></div>
+  </div>
 
-<div id="homeContent">
-  <div class="page-wrap">
-    <div class="wod-section">
-      <div class="sec-label">✦ Word of the Day</div>
-      <div class="wod-card" id="wodCard"><div class="loading"><div class="spinner"></div></div></div>
+  <div class="section" id="recentSec" style="display:none">
+    <div class="sec-row">
+      <span class="sec-title">🕐 Recent Searches</span>
+      <button class="link-btn" onclick="clearRecent()">Clear all</button>
     </div>
+    <div class="chip-row" id="recentChips"></div>
+  </div>
 
-    <div class="sec-label">✦ Browse by Category</div>
-    <div class="cat-grid">
-      <div class="cat-card" data-word="ephemeral"><div class="cat-icon">📚</div><div class="cat-name">Literature</div></div>
-      <div class="cat-card" data-word="hypothesis"><div class="cat-icon">🔬</div><div class="cat-name">Science</div></div>
-      <div class="cat-card" data-word="algorithm"><div class="cat-icon">💻</div><div class="cat-name">Tech</div></div>
-      <div class="cat-card" data-word="serendipity"><div class="cat-icon">✨</div><div class="cat-name">Beautiful</div></div>
-      <div class="cat-card" data-word="democracy"><div class="cat-icon">🏛️</div><div class="cat-name">Politics</div></div>
-      <div class="cat-card" data-word="melancholy"><div class="cat-icon">🎭</div><div class="cat-name">Emotions</div></div>
-    </div>
-
-    <div id="recentSection" style="display:none">
-      <div class="sec-label">✦ Recent Searches</div>
-      <div class="recent-list" id="recentList"></div>
+  <div class="section">
+    <div class="sec-title">📚 Browse Topics</div>
+    <div class="topic-grid">
+      <div class="topic-card" onclick="doSearch('ephemeral')"><span>📖</span><b>Literature</b></div>
+      <div class="topic-card" onclick="doSearch('hypothesis')"><span>🔬</span><b>Science</b></div>
+      <div class="topic-card" onclick="doSearch('algorithm')"><span>💻</span><b>Technology</b></div>
+      <div class="topic-card" onclick="doSearch('serendipity')"><span>✨</span><b>Beautiful</b></div>
+      <div class="topic-card" onclick="doSearch('democracy')"><span>🏛️</span><b>Politics</b></div>
+      <div class="topic-card" onclick="doSearch('melancholy')"><span>🎭</span><b>Emotions</b></div>
     </div>
   </div>
+</div>
+
+<div id="resultView" style="display:none">
+  <div class="result-container" id="resultContent"></div>
 </div>
 
 <nav class="bottom-nav">
-  <a href="index.html" class="bnav active">🏠<span>Home</span></a>
-  <a href="translate.html" class="bnav">🌐<span>Translate</span></a>
-  <a href="favorites.html" class="bnav">❤️<span>Favorites</span></a>
-  <a href="quiz.html" class="bnav">🎯<span>Quiz</span></a>
-  <a href="about.html" class="bnav">ℹ️<span>About</span></a>
+  <a class="bn active" href="index.html" onclick="goHome(event)">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    <span>Home</span>
+  </a>
+  <a class="bn" href="translate.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg>
+    <span>Translate</span>
+  </a>
+  <a class="bn" href="favorites.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    <span>Favorites</span>
+  </a>
+  <a class="bn" href="quiz.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span>Quiz</span>
+  </a>
+  <a class="bn" href="about.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span>About</span>
+  </a>
 </nav>
 
 <script src="app.js"></script>

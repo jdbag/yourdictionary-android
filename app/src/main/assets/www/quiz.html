@@ -5,118 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Quiz - Your Dictionary</title>
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body>
-<header class="header">
-  <div class="header-inner">
-    <div class="logo" onclick="location.href='index.html'">
-      <div class="logo-icon-wrap">
-        <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
-          <rect width="32" height="32" rx="8" fill="#1a3a8f"/>
-          <path d="M8 22 L16 8 L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M10.5 17 L21.5 17" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="logo-text">YourDict</span>
-    </div>
-    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
-  </div>
-</header>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html" class="mnav-item">🏠 Home</a>
-  <a href="translate.html" class="mnav-item">🌐 Translate</a>
-  <a href="favorites.html" class="mnav-item">❤️ Favorites</a>
-  <a href="quiz.html" class="mnav-item active">🎯 Quiz</a>
-  <a href="about.html" class="mnav-item">ℹ️ About</a>
+<body><script>document.body.className=localStorage.getItem('yd_theme')||'light';</script>
+<div class="page-bar">
+  <button class="page-back" onclick="location.href='index.html'">←</button>
+  <span class="page-ttl">🎯 Word Quiz</span>
 </div>
-
-<div class="page-wrap">
-  <div class="page-title">🎯 Word Quiz</div>
-  <div id="quizContainer"><div style="text-align:center;padding:40px"><div class="spinner dark" style="margin:0 auto"></div><p style="margin-top:12px;color:#64748b">Loading quiz...</p></div></div>
-</div>
-
+<div class="page-wrap"><div id="qBox"><div class="center-spin" style="padding:60px"><div class="spin dark"></div></div></div></div>
 <nav class="bottom-nav">
-  <a href="index.html" class="bnav">🏠<span>Home</span></a>
-  <a href="translate.html" class="bnav">🌐<span>Translate</span></a>
-  <a href="favorites.html" class="bnav">❤️<span>Favorites</span></a>
-  <a href="quiz.html" class="bnav active">🎯<span>Quiz</span></a>
-  <a href="about.html" class="bnav">ℹ️<span>About</span></a>
+  <a class="bn" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
+  <a class="bn" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg><span>Translate</span></a>
+  <a class="bn" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favorites</span></a>
+  <a class="bn active" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
+  <a class="bn" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>About</span></a>
 </nav>
-
 <script>
-document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileNav').classList.toggle('open'));
-
-const words=['ephemeral','serendipity','melancholy','resilience','eloquence','luminous','tenacious','labyrinth','solitude','whimsical','ambiguous','profound','jubilant','zenith','cascade','obsolete','pragmatic','versatile','diligent','candid'];
-let score=0,current=0,questions=[],total=5;
-
-function shuffle(a){return a.sort(()=>Math.random()-.5);}
-
-async function startQuiz(){
-  score=0;current=0;questions=[];
-  const container=document.getElementById('quizContainer');
-  container.innerHTML='<div style="text-align:center;padding:40px"><div class="spinner dark" style="margin:0 auto"></div><p style="margin-top:12px;color:#64748b">Loading...</p></div>';
-  const selected=shuffle([...words]).slice(0,total);
-  for(const w of selected){
-    try{
-      const res=await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${w}`);
-      const data=await res.json();
-      const def=data[0].meanings[0].definitions[0].definition;
-      questions.push({word:w,def});
-    }catch(e){}
+const wds=['ephemeral','serendipity','melancholy','resilience','eloquence','luminous','tenacious','labyrinth','solitude','whimsical','ambiguous','profound','jubilant','zenith','cascade','obsolete','pragmatic','versatile','diligent','candid'];
+let qs=[],cur=0,score=0;
+const sh=a=>a.sort(()=>Math.random()-.5);
+async function start(){
+  qs=[];cur=0;score=0;
+  document.getElementById('qBox').innerHTML='<div class="center-spin" style="padding:60px"><div class="spin dark"></div></div>';
+  for(const w of sh([...wds]).slice(0,5)){
+    try{const r=await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${w}`);const d=await r.json();qs.push({word:w,def:d[0].meanings[0].definitions[0].definition});}catch(e){}
   }
-  if(questions.length<2){container.innerHTML='<div class="error-card"><div class="icon">⚠️</div><h3>No internet</h3><p>Please connect to the internet to play the quiz.</p><button class="btn-primary" onclick="startQuiz()">Retry</button></div>';return;}
-  showQuestion();
+  if(qs.length<2){document.getElementById('qBox').innerHTML='<div class="err-box"><div class="ico">📡</div><h3>No internet</h3><p>Connect to internet to play.</p><button class="btn-grad" onclick="start()" style="max-width:200px">Retry</button></div>';return;}
+  showQ();
 }
-
-function showQuestion(){
-  if(current>=questions.length){showResult();return;}
-  const q=questions[current];
-  const others=shuffle(words.filter(w=>w!==q.word)).slice(0,3);
-  const opts=shuffle([q.word,...others]);
-  const pct=Math.round((current/questions.length)*100);
-  document.getElementById('quizContainer').innerHTML=`
-    <div style="margin-bottom:16px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-        <span style="font-size:13px;font-weight:800;color:#64748b">${current+1} / ${questions.length}</span>
-        <span style="font-size:13px;font-weight:800;color:#1a3a8f">Score: ${score}</span>
-      </div>
-      <div class="quiz-progress"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+function showQ(){
+  if(cur>=qs.length){showRes();return;}
+  const q=qs[cur];
+  const opts=sh([q.word,...sh(wds.filter(w=>w!==q.word)).slice(0,3)]);
+  const pct=Math.round(cur/qs.length*100);
+  document.getElementById('qBox').innerHTML=`
+    <div class="quiz-hdr">
+      <div class="quiz-meta"><span class="quiz-n">Question ${cur+1} / ${qs.length}</span><span class="quiz-s">Score: ${score}</span></div>
+      <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
     </div>
-    <div class="card">
-      <p style="font-size:12px;font-weight:800;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">What word matches this definition?</p>
-      <div class="quiz-def">${q.def}</div>
-      <div class="quiz-options">
-        ${opts.map(o=>`<button class="quiz-option" onclick="checkAnswer('${o}','${q.word}',this)">${o}</button>`).join('')}
-      </div>
-    </div>`;
+    <div class="card"><div class="q-def">${q.def}</div></div>
+    <div class="q-opts">${opts.map(o=>`<button class="q-opt" onclick="check('${o}','${q.word}',this)">${o}</button>`).join('')}</div>`;
 }
-
-function checkAnswer(sel,correct,btn){
-  document.querySelectorAll('.quiz-option').forEach(b=>b.style.pointerEvents='none');
-  if(sel===correct){score++;btn.classList.add('correct');}
-  else{
-    btn.classList.add('wrong');
-    document.querySelectorAll('.quiz-option').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('correct');});
-  }
-  setTimeout(()=>{current++;showQuestion();},1000);
+function check(sel,correct,btn){
+  document.querySelectorAll('.q-opt').forEach(b=>b.style.pointerEvents='none');
+  if(sel===correct){score++;btn.classList.add('ok');}
+  else{btn.classList.add('no');document.querySelectorAll('.q-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('ok');});}
+  setTimeout(()=>{cur++;showQ();},900);
 }
-
-function showResult(){
-  const pct=Math.round((score/questions.length)*100);
-  const emoji=pct>=80?'🏆':pct>=60?'👍':'📚';
-  const msg=pct>=80?'Excellent vocabulary!':pct>=60?'Good job! Keep going!':'Keep learning!';
-  document.getElementById('quizContainer').innerHTML=`
-    <div class="card" style="text-align:center;padding:32px">
-      <div style="font-size:64px;margin-bottom:12px">${emoji}</div>
-      <h2 style="font-size:24px;margin-bottom:8px">Quiz Complete!</h2>
-      <p style="font-size:18px;color:#64748b;margin-bottom:6px">Score: <strong style="color:#1a3a8f">${score}/${questions.length}</strong></p>
-      <p style="color:#64748b;margin-bottom:24px">${msg}</p>
-      <button class="btn-primary" onclick="startQuiz()">Play Again</button>
-    </div>`;
+function showRes(){
+  const pct=Math.round(score/qs.length*100);
+  document.getElementById('qBox').innerHTML=`<div class="card" style="text-align:center;padding:32px"><div style="font-size:60px;margin-bottom:12px">${pct>=80?'🏆':pct>=60?'👍':'📚'}</div><div style="font-size:22px;font-weight:900;margin-bottom:8px">Quiz Complete!</div><div style="font-size:16px;color:var(--text2);margin-bottom:24px">Score: <strong style="color:var(--primary)">${score}/${qs.length}</strong></div><button class="btn-grad" onclick="start()">Play Again</button></div>`;
 }
-
-startQuiz();
+start();
 </script>
-</body>
-</html>
+</body></html>

@@ -5,66 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Favorites - Your Dictionary</title>
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body>
-<header class="header">
-  <div class="header-inner">
-    <div class="logo" onclick="location.href='index.html'">
-      <div class="logo-icon-wrap">
-        <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
-          <rect width="32" height="32" rx="8" fill="#1a3a8f"/>
-          <path d="M8 22 L16 8 L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M10.5 17 L21.5 17" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="logo-text">YourDict</span>
-    </div>
-    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
-  </div>
-</header>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html" class="mnav-item">🏠 Home</a>
-  <a href="translate.html" class="mnav-item">🌐 Translate</a>
-  <a href="favorites.html" class="mnav-item active">❤️ Favorites</a>
-  <a href="quiz.html" class="mnav-item">🎯 Quiz</a>
-  <a href="about.html" class="mnav-item">ℹ️ About</a>
+<body><script>document.body.className=localStorage.getItem('yd_theme')||'light';</script>
+<div class="page-bar">
+  <button class="page-back" onclick="location.href='index.html'">←</button>
+  <span class="page-ttl">❤️ Saved Words</span>
 </div>
-
-<div class="page-wrap">
-  <div class="page-title">❤️ Saved Words</div>
-  <div id="favList"></div>
-</div>
-
+<div class="page-wrap" id="favWrap"></div>
 <nav class="bottom-nav">
-  <a href="index.html" class="bnav">🏠<span>Home</span></a>
-  <a href="translate.html" class="bnav">🌐<span>Translate</span></a>
-  <a href="favorites.html" class="bnav active">❤️<span>Favorites</span></a>
-  <a href="quiz.html" class="bnav">🎯<span>Quiz</span></a>
-  <a href="about.html" class="bnav">ℹ️<span>About</span></a>
+  <a class="bn" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
+  <a class="bn" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg><span>Translate</span></a>
+  <a class="bn active" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favorites</span></a>
+  <a class="bn" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
+  <a class="bn" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>About</span></a>
 </nav>
-
 <script>
-document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileNav').classList.toggle('open'));
-const favorites=JSON.parse(localStorage.getItem('favorites')||'[]');
-const list=document.getElementById('favList');
-if(!favorites.length){
-  list.innerHTML='<div class="error-card"><div class="icon">❤️</div><h3>No saved words</h3><p>Search for words and tap Save to add them here.</p><a href="index.html" class="btn-primary" style="text-decoration:none;display:inline-block">Search Words</a></div>';
+const favs=JSON.parse(localStorage.getItem('yd_favs')||'[]');
+const wrap=document.getElementById('favWrap');
+if(!favs.length){
+  wrap.innerHTML='<div class="err-box"><div class="ico">❤️</div><h3>No saved words</h3><p>Search words and tap ❤️ to save them here.</p><a href="index.html" class="btn-grad" style="text-decoration:none;display:inline-block;padding:13px 28px;border-radius:50px;color:#fff;font-weight:700">Search Words</a></div>';
 }else{
-  list.innerHTML=favorites.map(w=>`
-    <div class="fav-item" id="fav-${w}">
-      <span class="fav-word">${w}</span>
-      <div class="fav-actions">
-        <a href="index.html?word=${w}" class="tag-btn" style="background:#1a3a8f;color:#fff;text-decoration:none">Look up</a>
-        <button class="tag-btn" style="background:#fff0f6;color:#ff4081;border:1px solid #ff4081" onclick="remove('${w}')">Remove</button>
-      </div>
-    </div>`).join('');
+  wrap.innerHTML=favs.map(w=>`<div class="fav-item" id="fi-${w}"><span class="fav-word">${w}</span><div class="fav-btns"><a href="index.html?word=${w}" class="sm-btn" style="background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;text-decoration:none">Look up</a><button class="sm-btn" style="background:#fff5f5;color:#f43f5e;border:1px solid #f43f5e" onclick="rm('${w}')">Remove</button></div></div>`).join('');
 }
-function remove(word){
-  const favs=JSON.parse(localStorage.getItem('favorites')||'[]');
-  localStorage.setItem('favorites',JSON.stringify(favs.filter(w=>w!==word)));
-  document.getElementById('fav-'+word)?.remove();
-}
+function rm(w){const f=JSON.parse(localStorage.getItem('yd_favs')||'[]').filter(x=>x!==w);localStorage.setItem('yd_favs',JSON.stringify(f));document.getElementById('fi-'+w)?.remove();if(!f.length)location.reload();}
 </script>
-</body>
-</html>
+</body></html>
