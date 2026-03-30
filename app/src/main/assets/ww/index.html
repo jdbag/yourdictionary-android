@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Your Dictionary</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="hdr-left">
+    <img src="logo.png" class="hdr-logo" alt="" onerror="this.style.display='none'">
+    <span class="hdr-title">YourDict</span>
+  </div>
+  <button class="hdr-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+</header>
+
+<!-- SEARCH BAR (sticky) -->
+<div class="search-sticky">
+  <div class="search-row">
+    <div class="search-box" id="searchBox">
+      <svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      <input id="inp" type="text" placeholder="Search in English..." autocomplete="off" spellcheck="false">
+      <button class="sb-x" id="sbX" onclick="clearAll()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- LANG BAR -->
+  <div class="lang-bar">
+    <button class="lb-btn lb-from" onclick="openLang('from')">
+      <span id="fFlag">🇬🇧</span>
+      <span id="fName">English</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <button class="lb-swap" onclick="swapLangs()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+    </button>
+    <button class="lb-btn lb-to" onclick="openLang('to')">
+      <span id="tFlag">🇸🇦</span>
+      <span id="tName">Arabic</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+  <!-- SUGGESTIONS -->
+  <div class="sugg-drop" id="suggDrop"></div>
+</div>
+
+<!-- RESULT (shown after search) -->
+<div id="resultArea" style="display:none">
+
+  <!-- WORD HERO -->
+  <div class="word-hero" id="wordHero"></div>
+
+  <!-- PRONUNCIATION ROW -->
+  <div class="pron-row" id="pronRow"></div>
+
+  <!-- SECTION TABS -->
+  <div class="sec-tabs" id="secTabs">
+    <button class="stab active" data-s="dict" onclick="showSection('dict')">Dictionary</button>
+    <button class="stab" data-s="trans" onclick="showSection('trans')">Translation</button>
+    <button class="stab" data-s="syn" onclick="showSection('syn')">Synonyms</button>
+  </div>
+
+  <!-- DICTIONARY SECTION -->
+  <div id="secDict" class="sec-content"></div>
+
+  <!-- TRANSLATION SECTION -->
+  <div id="secTrans" class="sec-content" style="display:none"></div>
+
+  <!-- SYNONYMS SECTION -->
+  <div id="secSyn" class="sec-content" style="display:none"></div>
+
+  <button class="back-home" onclick="goHome()">← Back to Home</button>
+</div>
+
+<!-- HOME -->
+<div id="homeArea">
+
+  <!-- WOD -->
+  <div class="home-block">
+    <div class="blk-hdr">
+      <span class="blk-title">Word of the Day</span>
+      <span class="blk-badge">TODAY</span>
+    </div>
+    <div class="wod-card" id="wodCard">
+      <div class="spin-center"><div class="spinner"></div></div>
+    </div>
+  </div>
+
+  <!-- QUICK ACCESS -->
+  <div class="home-block">
+    <div class="blk-hdr"><span class="blk-title">Quick Access</span></div>
+    <div class="qa-grid">
+      <a href="favorites.html" class="qa-item qa-pink">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg>
+        <span>Favorites</span>
+      </a>
+      <a href="quiz.html" class="qa-item qa-purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span>Quiz</span>
+      </a>
+      <a href="translate.html" class="qa-item qa-blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg>
+        <span>Translate</span>
+      </a>
+      <a href="about.html" class="qa-item qa-teal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>Settings</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- RECENT -->
+  <div class="home-block" id="recentBlk" style="display:none">
+    <div class="blk-hdr">
+      <span class="blk-title">Recent Searches</span>
+      <button class="blk-act" onclick="clearRecent()">Clear all</button>
+    </div>
+    <div class="chip-row" id="recentChips"></div>
+  </div>
+
+  <!-- TOPICS -->
+  <div class="home-block">
+    <div class="blk-hdr"><span class="blk-title">Browse Topics</span></div>
+    <div class="topic-list">
+      <div class="topic-row" onclick="search('ephemeral')"><span class="tr-icon">📖</span><div class="tr-info"><b>Literature</b><span>ephemeral, eloquent...</span></div><span class="tr-chev">›</span></div>
+      <div class="topic-row" onclick="search('hypothesis')"><span class="tr-icon">🔬</span><div class="tr-info"><b>Science</b><span>hypothesis, catalyst...</span></div><span class="tr-chev">›</span></div>
+      <div class="topic-row" onclick="search('algorithm')"><span class="tr-icon">💻</span><div class="tr-info"><b>Technology</b><span>algorithm, binary...</span></div><span class="tr-chev">›</span></div>
+      <div class="topic-row" onclick="search('serendipity')"><span class="tr-icon">✨</span><div class="tr-info"><b>Beautiful Words</b><span>serendipity, luminous...</span></div><span class="tr-chev">›</span></div>
+      <div class="topic-row" onclick="search('democracy')"><span class="tr-icon">🏛️</span><div class="tr-info"><b>Politics</b><span>democracy, sovereign...</span></div><span class="tr-chev">›</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- LANG MODAL -->
+<div class="modal-overlay" id="langModal" style="display:none" onclick="closeLang()">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <span>Select Language</span>
+      <button onclick="closeLang()">✕</button>
+    </div>
+    <div id="langItems"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a class="bn active" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
+  <a class="bn" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg><span>Translate</span></a>
+  <a class="bn" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg><span>Saved</span></a>
+  <a class="bn" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
+  <a class="bn" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg><span>More</span></a>
+</nav>
+
+<script src="app.js"></script>
+</body>
+</html>
