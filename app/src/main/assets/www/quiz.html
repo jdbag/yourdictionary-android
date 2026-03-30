@@ -7,54 +7,50 @@
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body><script>document.body.className=localStorage.getItem('yd_theme')||'light';</script>
-<div class="page-bar">
+<body><script>document.body.className=localStorage.getItem('yd_t')||'dark';</script>
+<div class="page-top">
   <button class="page-back" onclick="location.href='index.html'">←</button>
   <span class="page-ttl">🎯 Word Quiz</span>
 </div>
-<div class="page-wrap"><div id="qBox"><div class="center-spin" style="padding:60px"><div class="spin dark"></div></div></div></div>
-<nav class="bottom-nav">
-  <a class="bn" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
-  <a class="bn" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg><span>Translate</span></a>
-  <a class="bn" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favorites</span></a>
-  <a class="bn active" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
-  <a class="bn" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>About</span></a>
+<div class="page-wrap"><div id="qb"><div class="loading-c" style="padding:60px"><div class="spin"></div></div></div></div>
+<nav class="bnav">
+  <a class="bni" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
+  <a class="bni" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10z"/></svg><span>Translate</span></a>
+  <a class="bni" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg><span>Favorites</span></a>
+  <a class="bni active" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
+  <a class="bni" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>More</span></a>
 </nav>
 <script>
-const wds=['ephemeral','serendipity','melancholy','resilience','eloquence','luminous','tenacious','labyrinth','solitude','whimsical','ambiguous','profound','jubilant','zenith','cascade','obsolete','pragmatic','versatile','diligent','candid'];
-let qs=[],cur=0,score=0;
+const wl=['ephemeral','serendipity','melancholy','resilience','eloquence','luminous','tenacious','labyrinth','solitude','whimsical','ambiguous','profound','jubilant','zenith','cascade','obsolete','pragmatic','versatile','diligent','candid'];
+let qs=[],cur=0,sc=0;
 const sh=a=>a.sort(()=>Math.random()-.5);
 async function start(){
-  qs=[];cur=0;score=0;
-  document.getElementById('qBox').innerHTML='<div class="center-spin" style="padding:60px"><div class="spin dark"></div></div>';
-  for(const w of sh([...wds]).slice(0,5)){
+  qs=[];cur=0;sc=0;
+  document.getElementById('qb').innerHTML='<div class="loading-c" style="padding:60px"><div class="spin"></div></div>';
+  for(const w of sh([...wl]).slice(0,5)){
     try{const r=await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${w}`);const d=await r.json();qs.push({word:w,def:d[0].meanings[0].definitions[0].definition});}catch(e){}
   }
-  if(qs.length<2){document.getElementById('qBox').innerHTML='<div class="err-box"><div class="ico">📡</div><h3>No internet</h3><p>Connect to internet to play.</p><button class="btn-grad" onclick="start()" style="max-width:200px">Retry</button></div>';return;}
-  showQ();
+  if(qs.length<2){document.getElementById('qb').innerHTML='<div class="err-card"><div class="err-ico">📡</div><h3>No internet</h3><p>Connect to play.</p><button class="btn-primary" onclick="start()">Retry</button></div>';return;}
+  show();
 }
-function showQ(){
-  if(cur>=qs.length){showRes();return;}
-  const q=qs[cur];
-  const opts=sh([q.word,...sh(wds.filter(w=>w!==q.word)).slice(0,3)]);
+function show(){
+  if(cur>=qs.length){done();return;}
+  const q=qs[cur];const opts=sh([q.word,...sh(wl.filter(w=>w!==q.word)).slice(0,3)]);
   const pct=Math.round(cur/qs.length*100);
-  document.getElementById('qBox').innerHTML=`
-    <div class="quiz-hdr">
-      <div class="quiz-meta"><span class="quiz-n">Question ${cur+1} / ${qs.length}</span><span class="quiz-s">Score: ${score}</span></div>
-      <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
-    </div>
-    <div class="card"><div class="q-def">${q.def}</div></div>
-    <div class="q-opts">${opts.map(o=>`<button class="q-opt" onclick="check('${o}','${q.word}',this)">${o}</button>`).join('')}</div>`;
+  document.getElementById('qb').innerHTML=`
+    <div class="q-hdr"><div class="q-meta"><span class="q-n">${cur+1} / ${qs.length}</span><span class="q-s">Score: ${sc}</span></div><div class="pbar"><div class="pbar-f" style="width:${pct}%"></div></div></div>
+    <div class="card"><div class="q-def-lbl">Which word matches this definition?</div><div class="q-def-txt">${q.def}</div></div>
+    <div class="q-opts">${opts.map(o=>`<button class="q-opt" onclick="chk('${o}','${q.word}',this)">${o}</button>`).join('')}</div>`;
 }
-function check(sel,correct,btn){
+function chk(sel,correct,btn){
   document.querySelectorAll('.q-opt').forEach(b=>b.style.pointerEvents='none');
-  if(sel===correct){score++;btn.classList.add('ok');}
+  if(sel===correct){sc++;btn.classList.add('ok');}
   else{btn.classList.add('no');document.querySelectorAll('.q-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('ok');});}
-  setTimeout(()=>{cur++;showQ();},900);
+  setTimeout(()=>{cur++;show();},900);
 }
-function showRes(){
-  const pct=Math.round(score/qs.length*100);
-  document.getElementById('qBox').innerHTML=`<div class="card" style="text-align:center;padding:32px"><div style="font-size:60px;margin-bottom:12px">${pct>=80?'🏆':pct>=60?'👍':'📚'}</div><div style="font-size:22px;font-weight:900;margin-bottom:8px">Quiz Complete!</div><div style="font-size:16px;color:var(--text2);margin-bottom:24px">Score: <strong style="color:var(--primary)">${score}/${qs.length}</strong></div><button class="btn-grad" onclick="start()">Play Again</button></div>`;
+function done(){
+  const p=Math.round(sc/qs.length*100);
+  document.getElementById('qb').innerHTML=`<div class="card" style="text-align:center;padding:32px"><div style="font-size:60px;margin-bottom:14px">${p>=80?'🏆':p>=60?'👍':'📚'}</div><div style="font-size:22px;font-weight:900;margin-bottom:8px">Quiz Complete!</div><div style="font-size:16px;color:var(--text2);margin-bottom:24px">Score: <strong style="color:var(--primary)">${sc}/${qs.length}</strong></div><button class="btn-primary" onclick="start()">Play Again</button></div>`;
 }
 start();
 </script>

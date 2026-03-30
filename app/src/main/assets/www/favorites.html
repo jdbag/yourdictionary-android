@@ -7,27 +7,24 @@
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body><script>document.body.className=localStorage.getItem('yd_theme')||'light';</script>
-<div class="page-bar">
+<body><script>document.body.className=localStorage.getItem('yd_t')||'dark';</script>
+<div class="page-top">
   <button class="page-back" onclick="location.href='index.html'">←</button>
-  <span class="page-ttl">❤️ Saved Words</span>
+  <span class="page-ttl">⭐ Saved Words</span>
 </div>
-<div class="page-wrap" id="favWrap"></div>
-<nav class="bottom-nav">
-  <a class="bn" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
-  <a class="bn" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg><span>Translate</span></a>
-  <a class="bn active" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favorites</span></a>
-  <a class="bn" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
-  <a class="bn" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>About</span></a>
+<div class="page-wrap" id="fw"></div>
+<nav class="bnav">
+  <a class="bni" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
+  <a class="bni" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10z"/></svg><span>Translate</span></a>
+  <a class="bni active" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg><span>Favorites</span></a>
+  <a class="bni" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
+  <a class="bni" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>More</span></a>
 </nav>
 <script>
-const favs=JSON.parse(localStorage.getItem('yd_favs')||'[]');
-const wrap=document.getElementById('favWrap');
-if(!favs.length){
-  wrap.innerHTML='<div class="err-box"><div class="ico">❤️</div><h3>No saved words</h3><p>Search words and tap ❤️ to save them here.</p><a href="index.html" class="btn-grad" style="text-decoration:none;display:inline-block;padding:13px 28px;border-radius:50px;color:#fff;font-weight:700">Search Words</a></div>';
-}else{
-  wrap.innerHTML=favs.map(w=>`<div class="fav-item" id="fi-${w}"><span class="fav-word">${w}</span><div class="fav-btns"><a href="index.html?word=${w}" class="sm-btn" style="background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;text-decoration:none">Look up</a><button class="sm-btn" style="background:#fff5f5;color:#f43f5e;border:1px solid #f43f5e" onclick="rm('${w}')">Remove</button></div></div>`).join('');
-}
-function rm(w){const f=JSON.parse(localStorage.getItem('yd_favs')||'[]').filter(x=>x!==w);localStorage.setItem('yd_favs',JSON.stringify(f));document.getElementById('fi-'+w)?.remove();if(!f.length)location.reload();}
+const f=JSON.parse(localStorage.getItem('yd_f')||'[]');
+const w=document.getElementById('fw');
+if(!f.length){w.innerHTML='<div class="err-card"><div class="err-ico">⭐</div><h3>No saved words</h3><p>Search words and tap ❤️ to save them.</p><a href="index.html" class="btn-primary" style="text-decoration:none;display:inline-block;text-align:center">Search Words</a></div>';}
+else{w.innerHTML=f.map(x=>`<div class="fav-item" id="fi-${x}"><span class="fav-wd">${x}</span><div class="fav-btns"><a href="index.html?word=${x}" class="sm-btn" style="background:var(--primary);color:#fff;text-decoration:none">Look up</a><button class="sm-btn" style="background:rgba(247,85,85,.15);color:var(--red);border:1px solid var(--red)" onclick="rm('${x}')">Remove</button></div></div>`).join('');}
+function rm(x){const nf=JSON.parse(localStorage.getItem('yd_f')||'[]').filter(y=>y!==x);localStorage.setItem('yd_f',JSON.stringify(nf));document.getElementById('fi-'+x)?.remove();if(!nf.length)location.reload();}
 </script>
 </body></html>

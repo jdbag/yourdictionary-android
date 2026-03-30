@@ -7,41 +7,51 @@
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body><script>document.body.className=localStorage.getItem('yd_theme')||'light';</script>
-<div class="page-bar">
+<body><script>document.body.className=localStorage.getItem('yd_t')||'dark';</script>
+<div class="page-top">
   <button class="page-back" onclick="location.href='index.html'">←</button>
-  <span class="page-ttl">About</span>
+  <span class="page-ttl">More</span>
 </div>
 <div class="page-wrap">
   <div class="about-hero">
-    <div class="about-icon">
-      <svg viewBox="0 0 40 40" width="44" height="44"><defs><linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#ff6eb4"/><stop offset="50%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#2563eb"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#ag)"/><g fill="none" stroke="white" stroke-linecap="round"><line x1="20" y1="28" x2="8" y2="28" stroke-width="2.2"/><line x1="20" y1="28" x2="32" y2="28" stroke-width="2.2"/><line x1="20" y1="28" x2="20" y2="16" stroke-width="1.8"/><path d="M8 28 Q10 18 20 16" stroke-width="1.8"/><path d="M10 25 Q12 17 20 16" stroke-width="1.4" opacity="0.8"/><path d="M32 28 Q30 18 20 16" stroke-width="1.8"/><path d="M30 25 Q28 17 20 16" stroke-width="1.4" opacity="0.8"/></g></svg>
+    <div class="ab-logo"><img src="logo.png" alt="Your Dictionary" onerror="this.style.display='none'"></div>
+    <div class="ab-name">Your Dictionary</div>
+    <div class="ab-ver">Version 1.1 · Free</div>
+  </div>
+  <div class="card">
+    <div class="card-ttl">Features</div>
+    <div class="feat-row"><div class="feat-ic">🔍</div><div class="feat-desc">Instant definitions & examples</div></div>
+    <div class="feat-row"><div class="feat-ic">🔊</div><div class="feat-desc">UK & US pronunciation</div></div>
+    <div class="feat-row"><div class="feat-ic">🔄</div><div class="feat-desc">Synonyms & antonyms</div></div>
+    <div class="feat-row"><div class="feat-ic">🌐</div><div class="feat-desc">Translate 13 languages</div></div>
+    <div class="feat-row"><div class="feat-ic">⭐</div><div class="feat-desc">Save favorites</div></div>
+    <div class="feat-row"><div class="feat-ic">🎯</div><div class="feat-desc">Vocabulary quiz</div></div>
+    <div class="feat-row"><div class="feat-ic">📅</div><div class="feat-desc">Word of the Day</div></div>
+    <div class="feat-row"><div class="feat-ic">🌙</div><div class="feat-desc">Dark / Light mode</div></div>
+  </div>
+  <div class="card">
+    <div class="card-ttl">Settings</div>
+    <div class="feat-row" style="cursor:pointer" onclick="toggleThemeHere()">
+      <div class="feat-ic">🌙</div>
+      <div class="feat-desc">Dark / Light mode</div>
+      <div style="margin-left:auto;font-size:13px;color:var(--primary);font-weight:700" id="themeLabel"></div>
     </div>
-    <div class="about-name">Your Dictionary</div>
-    <div class="about-v">Version 1.1 · Free Forever</div>
-  </div>
-  <div class="card">
-    <div class="card-title">Features</div>
-    <div class="feat-row"><div class="feat-ic">🔍</div><div class="feat-txt">Instant definitions, examples & usage</div></div>
-    <div class="feat-row"><div class="feat-ic">🔊</div><div class="feat-txt">UK & US audio pronunciation</div></div>
-    <div class="feat-row"><div class="feat-ic">🔄</div><div class="feat-txt">Synonyms & antonyms</div></div>
-    <div class="feat-row"><div class="feat-ic">🌐</div><div class="feat-txt">Translate between 13 languages</div></div>
-    <div class="feat-row"><div class="feat-ic">❤️</div><div class="feat-txt">Save favorite words</div></div>
-    <div class="feat-row"><div class="feat-ic">🎯</div><div class="feat-txt">Vocabulary quiz game</div></div>
-    <div class="feat-row"><div class="feat-ic">📅</div><div class="feat-txt">Word of the Day</div></div>
-    <div class="feat-row"><div class="feat-ic">🌙</div><div class="feat-txt">Dark mode</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Data Sources</div>
-    <div class="feat-row"><div class="feat-ic">📖</div><div class="feat-txt">Free Dictionary API</div></div>
-    <div class="feat-row"><div class="feat-ic">🌐</div><div class="feat-txt">MyMemory Translation API</div></div>
   </div>
 </div>
-<nav class="bottom-nav">
-  <a class="bn" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
-  <a class="bn" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg><span>Translate</span></a>
-  <a class="bn" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favorites</span></a>
-  <a class="bn" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
-  <a class="bn active" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>About</span></a>
+<nav class="bnav">
+  <a class="bni" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
+  <a class="bni" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10z"/></svg><span>Translate</span></a>
+  <a class="bni" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg><span>Favorites</span></a>
+  <a class="bni" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
+  <a class="bni active" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>More</span></a>
 </nav>
+<script>
+const lbl=document.getElementById('themeLabel');
+function updateLbl(){if(lbl)lbl.textContent=document.body.className==='dark'?'Dark':'Light';}
+updateLbl();
+function toggleThemeHere(){
+  const t=document.body.className==='dark'?'light':'dark';
+  document.body.className=t;localStorage.setItem('yd_t',t);updateLbl();
+}
+</script>
 </body></html>

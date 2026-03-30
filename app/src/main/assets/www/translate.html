@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body><script>document.body.className=localStorage.getItem('yd_theme')||'light';</script>
-<div class="page-bar">
+<body><script>document.body.className=localStorage.getItem('yd_t')||'dark';</script>
+<div class="page-top">
   <button class="page-back" onclick="location.href='index.html'">←</button>
   <span class="page-ttl">🌐 Translate</span>
 </div>
 <div class="page-wrap">
-  <div class="lang-bar">
+  <div class="tlang-bar">
     <select id="fromLang">
       <option value="en">🇬🇧 English</option><option value="ar">🇸🇦 Arabic</option>
       <option value="fr">🇫🇷 French</option><option value="es">🇪🇸 Spanish</option>
@@ -23,7 +23,7 @@
       <option value="ko">🇰🇷 Korean</option><option value="tr">🇹🇷 Turkish</option>
       <option value="hi">🇮🇳 Hindi</option>
     </select>
-    <button class="swap-btn" onclick="swap()">⇄</button>
+    <button class="tswap" onclick="sw()">⇄</button>
     <select id="toLang">
       <option value="ar">🇸🇦 Arabic</option><option value="en">🇬🇧 English</option>
       <option value="fr">🇫🇷 French</option><option value="es">🇪🇸 Spanish</option>
@@ -36,39 +36,34 @@
   </div>
   <div class="card">
     <textarea id="inp" placeholder="Enter text to translate..."></textarea>
-    <div class="card-actions"><button onclick="document.getElementById('inp').value=''">✕ Clear</button></div>
+    <div class="cact"><button onclick="document.getElementById('inp').value=''">✕ Clear</button></div>
   </div>
-  <button class="btn-grad" onclick="translate()">Translate</button>
-  <div class="card" id="resCard" style="display:none;margin-top:12px">
-    <div class="result-lbl">Translation</div>
-    <div class="result-txt" id="resTxt"></div>
-    <div class="result-acts">
-      <button onclick="copy()">📋 Copy</button>
-      <button onclick="document.getElementById('resCard').style.display='none'">✕</button>
+  <button class="btn-primary" onclick="tr()" style="margin-bottom:12px">Translate</button>
+  <div class="card" id="rc" style="display:none">
+    <div class="r-lbl">Translation</div>
+    <div class="r-txt" id="rt"></div>
+    <div class="r-acts">
+      <button onclick="navigator.clipboard?.writeText(document.getElementById('rt').textContent)">📋 Copy</button>
+      <button onclick="document.getElementById('rc').style.display='none'">✕</button>
     </div>
   </div>
 </div>
-<nav class="bottom-nav">
-  <a class="bn" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
-  <a class="bn active" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg><span>Translate</span></a>
-  <a class="bn" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favorites</span></a>
-  <a class="bn" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
-  <a class="bn" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>About</span></a>
+<nav class="bnav">
+  <a class="bni" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
+  <a class="bni active" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10z"/></svg><span>Translate</span></a>
+  <a class="bni" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg><span>Favorites</span></a>
+  <a class="bni" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
+  <a class="bni" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>More</span></a>
 </nav>
 <script>
-function swap(){const f=document.getElementById('fromLang'),t=document.getElementById('toLang'),tmp=f.value;f.value=t.value;t.value=tmp;}
-async function translate(){
-  const text=document.getElementById('inp').value.trim();
-  if(!text)return;
+function sw(){const f=document.getElementById('fromLang'),t=document.getElementById('toLang'),tmp=f.value;f.value=t.value;t.value=tmp;}
+async function tr(){
+  const text=document.getElementById('inp').value.trim();if(!text)return;
   const from=document.getElementById('fromLang').value,to=document.getElementById('toLang').value;
-  const card=document.getElementById('resCard'),res=document.getElementById('resTxt');
-  card.style.display='block';res.textContent='Translating...';
-  try{
-    const r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`);
-    const d=await r.json();
-    res.textContent=d.responseData.translatedText;
-  }catch{res.textContent='Translation failed. Check internet connection.';}
+  const rc=document.getElementById('rc'),rt=document.getElementById('rt');
+  rc.style.display='block';rt.textContent='Translating...';
+  try{const r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`);const d=await r.json();rt.textContent=d.responseData.translatedText;}
+  catch{rt.textContent='Translation failed.';}
 }
-function copy(){navigator.clipboard?.writeText(document.getElementById('resTxt').textContent).catch(()=>{});}
 </script>
 </body></html>
