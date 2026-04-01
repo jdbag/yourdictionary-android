@@ -229,3 +229,19 @@ textarea::placeholder{color:var(--T3)}
 .bn.active{color:var(--P)}
 
 @media(max-width:360px){.qa-grid{grid-template-columns:1fr 1fr}}
+
+/* ── TABLET SUPPORT ── */
+@media (min-width: 600px) {
+  body { max-width: 680px; margin: 0 auto; }
+  .header,.search-sticky,.bottom-nav,.page-bar { max-width: 680px; left: 50%; transform: translateX(-50%); }
+  .bottom-nav { border-radius: 16px 16px 0 0; }
+  .word-hero,.pron-row,.sec-tabs { max-width: 680px; }
+  .qa-grid { grid-template-columns: repeat(4,1fr); }
+  .topic-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .quick-grid { grid-template-columns: repeat(4,1fr); }
+}
+
+@media (min-width: 900px) {
+  body { max-width: 800px; }
+  .header,.search-sticky,.bottom-nav,.page-bar { max-width: 800px; }
+}
