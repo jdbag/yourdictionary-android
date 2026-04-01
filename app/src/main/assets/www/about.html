@@ -1,57 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>About - Your Dictionary</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-</head>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Settings - YourDict</title><link rel="stylesheet" href="style.css"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></head>
 <body><script>document.body.className=localStorage.getItem('yd_t')||'dark';</script>
-<div class="page-top">
-  <button class="page-back" onclick="location.href='index.html'">←</button>
-  <span class="page-ttl">More</span>
-</div>
-<div class="page-wrap">
-  <div class="about-hero">
-    <div class="ab-logo"><img src="logo.png" alt="Your Dictionary" onerror="this.style.display='none'"></div>
+<div class="page-bar"><button class="pb-back" onclick="location.href='index.html'">←</button><span class="pb-title">More</span></div>
+<div class="pw">
+  <div class="ab-hero">
+    <div class="ab-img"><img src="logo.png" alt="" onerror="this.style.display='none'"></div>
     <div class="ab-name">Your Dictionary</div>
-    <div class="ab-ver">Version 1.1 · Free</div>
+    <div class="ab-ver">Version 2.0 · Free</div>
   </div>
   <div class="card">
-    <div class="card-ttl">Features</div>
-    <div class="feat-row"><div class="feat-ic">🔍</div><div class="feat-desc">Instant definitions & examples</div></div>
-    <div class="feat-row"><div class="feat-ic">🔊</div><div class="feat-desc">UK & US pronunciation</div></div>
-    <div class="feat-row"><div class="feat-ic">🔄</div><div class="feat-desc">Synonyms & antonyms</div></div>
-    <div class="feat-row"><div class="feat-ic">🌐</div><div class="feat-desc">Translate 13 languages</div></div>
-    <div class="feat-row"><div class="feat-ic">⭐</div><div class="feat-desc">Save favorites</div></div>
-    <div class="feat-row"><div class="feat-ic">🎯</div><div class="feat-desc">Vocabulary quiz</div></div>
-    <div class="feat-row"><div class="feat-ic">📅</div><div class="feat-desc">Word of the Day</div></div>
-    <div class="feat-row"><div class="feat-ic">🌙</div><div class="feat-desc">Dark / Light mode</div></div>
-  </div>
-  <div class="card">
-    <div class="card-ttl">Settings</div>
-    <div class="feat-row" style="cursor:pointer" onclick="toggleThemeHere()">
+    <div class="card-lbl">Settings</div>
+    <div class="feat-row" style="cursor:pointer" onclick="tgl()">
       <div class="feat-ic">🌙</div>
-      <div class="feat-desc">Dark / Light mode</div>
-      <div style="margin-left:auto;font-size:13px;color:var(--primary);font-weight:700" id="themeLabel"></div>
+      <div class="feat-info"><div class="feat-n">Dark Mode</div><div class="feat-d">Toggle dark / light theme</div></div>
+      <div class="feat-val" id="ts"></div>
     </div>
   </div>
+  <div class="card">
+    <div class="card-lbl">Features</div>
+    <div class="feat-row"><div class="feat-ic">🔍</div><div class="feat-info"><div class="feat-n">Dictionary</div><div class="feat-d">Definitions, examples & usage</div></div></div>
+    <div class="feat-row"><div class="feat-ic">🔊</div><div class="feat-info"><div class="feat-n">Pronunciation</div><div class="feat-d">UK & US audio pronunciation</div></div></div>
+    <div class="feat-row"><div class="feat-ic">🔤</div><div class="feat-info"><div class="feat-n">Synonyms & Antonyms</div><div class="feat-d">Related words and opposites</div></div></div>
+    <div class="feat-row"><div class="feat-ic">🌐</div><div class="feat-info"><div class="feat-n">Translation</div><div class="feat-d">16 languages supported</div></div></div>
+    <div class="feat-row"><div class="feat-ic">⭐</div><div class="feat-info"><div class="feat-n">Save Words</div><div class="feat-d">Build your vocabulary list</div></div></div>
+    <div class="feat-row"><div class="feat-ic">🎯</div><div class="feat-info"><div class="feat-n">Vocabulary Quiz</div><div class="feat-d">Test your English vocabulary</div></div></div>
+    <div class="feat-row"><div class="feat-ic">📅</div><div class="feat-info"><div class="feat-n">Word of the Day</div><div class="feat-d">Learn a new word every day</div></div></div>
+  </div>
+  <div class="card"><div class="card-lbl">Data Sources</div>
+    <div class="feat-row"><div class="feat-ic">📖</div><div class="feat-info"><div class="feat-n">Free Dictionary API</div><div class="feat-d">dictionaryapi.dev</div></div></div>
+    <div class="feat-row"><div class="feat-ic">🌍</div><div class="feat-info"><div class="feat-n">MyMemory Translation</div><div class="feat-d">mymemory.translated.net</div></div></div>
+  </div>
 </div>
-<nav class="bnav">
-  <a class="bni" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a>
-  <a class="bni" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10z"/></svg><span>Translate</span></a>
-  <a class="bni" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg><span>Favorites</span></a>
-  <a class="bni" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a>
-  <a class="bni active" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>More</span></a>
-</nav>
+<nav class="bottom-nav"><a class="bn" href="index.html"><svg viewBox="0 0 24 24" fill="currentColor" width="22"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span></a><a class="bn" href="translate.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg><span>Translate</span></a><a class="bn" href="favorites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg><span>Saved</span></a><a class="bn" href="quiz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quiz</span></a><a class="bn active" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg><span>More</span></a></nav>
 <script>
-const lbl=document.getElementById('themeLabel');
-function updateLbl(){if(lbl)lbl.textContent=document.body.className==='dark'?'Dark':'Light';}
-updateLbl();
-function toggleThemeHere(){
-  const t=document.body.className==='dark'?'light':'dark';
-  document.body.className=t;localStorage.setItem('yd_t',t);updateLbl();
-}
-</script>
-</body></html>
+const ts=document.getElementById('ts');
+function update(){if(ts)ts.textContent=document.body.className==='dark'?'Dark ●':'Light ●';}
+update();
+function tgl(){const t=document.body.className==='dark'?'light':'dark';document.body.className=t;localStorage.setItem('yd_t',t);update();}
+</script></body></html>
